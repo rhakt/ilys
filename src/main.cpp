@@ -1,7 +1,7 @@
 #define GLEW_NO_GLU
 
 #include <iostream>
-#include <gl/glew.h>
+#include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
 auto main()-> int {
