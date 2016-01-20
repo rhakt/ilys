@@ -44,4 +44,10 @@ glm
     $ cmake .. -G "Visual Studio 14"
     
     # open ilys.sln on Visual Studio and build
+    
+    ! glew, glfw : static link
+    
+glew.pc
+    
+    # Requires: glu //<- comment out
 

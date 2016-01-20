@@ -1,4 +1,5 @@
 #define GLEW_NO_GLU
+#define GLEW_STATIC
 
 #include <iostream>
 #include <GL/glew.h>
