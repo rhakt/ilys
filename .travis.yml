@@ -4,9 +4,8 @@ compiler:
   - gcc
  
 before_script:
-  - sudo apt-get upgrade
-  - sudo apt-get update
-  - sudo apt-get install libglm-dev libglew-dev libglfw-dev
+  - sudo apt-get update -qq
+  - sudo apt-get install -qq -y libglm-dev libglew-dev libglfw-dev
   - pkg-config --list-all | grep gl
   - mkdir build
   - cd build
