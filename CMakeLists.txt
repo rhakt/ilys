@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 2.8)
 
 project(ilys CXX)
 
+ENABLE_LANGUAGE(C)
+
 set(TARGET ${PROJECT_NAME})
 
 if("${CMAKE_SOURCE_DIR}" STREQUAL "${CMAKE_BINARY_DIR}")
@@ -35,7 +37,10 @@ endif()
 find_package(PkgConfig REQUIRED)
 find_package (OpenGL REQUIRED)
 pkg_search_module(GLEW REQUIRED glew)
-pkg_search_module(GLFW REQUIRED glfw3)
+pkg_search_module(GLFW glfw3)
+if (GLFW_FOUND)
+  pkg_search_module(GLFW REQUIRED libglfw)
+endif()
 
 include_directories(${GLEW_INCLUDE_DIRS} ${GLFW_INCLUDE_DIRS})
 link_directories(${GLEW_LIBRARY_DIRS} ${GLFW_LIBRARY_DIRS})
