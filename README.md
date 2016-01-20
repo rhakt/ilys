@@ -39,7 +39,7 @@ glm
     
     $ git clone https://github.com/rhakt/ilys.git
     $ cd ilys
-    $ dir build
+    $ mkdir build
     $ cd build 
     $ cmake .. -G "Visual Studio 14"
     
