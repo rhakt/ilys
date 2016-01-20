@@ -1,11 +1,14 @@
 language: cpp
 
-compiler: gcc
- 
-before_script:
-  - sudo apt-get update -qq
+compiler: g++-4.8
+
+install:
+  - sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/test
+  - sudo apt-get -qq update
+  - sudo apt-get -qq install g++-4.8
   - sudo apt-get install -qq -y libglm-dev libglew-dev libglfw-dev
-  - pkg-config --list-all | grep gl
+
+before_script:
   - mkdir build
   - cd build
   - cmake ..
