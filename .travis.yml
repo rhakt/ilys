@@ -1,6 +1,6 @@
 language: cpp
 
-compiler: g++-4.8
+compiler: gcc-4.8
 
 install:
   - sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/test
