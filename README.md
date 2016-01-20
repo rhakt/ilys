@@ -1,5 +1,3 @@
 # ilys
 
-master: [![Build Status](https://travis-ci.org/rhakt/ilys.svg?branch=master)](https://travis-ci.org/rhakt/ilys)
-
-develop: [![Build Status](https://travis-ci.org/rhakt/ilys.svg?branch=develop)](https://travis-ci.org/rhakt/ilys)
+[![Build Status](https://drone.io/github.com/rhakt/ilys/status.png)](https://drone.io/github.com/rhakt/ilys/latest)
