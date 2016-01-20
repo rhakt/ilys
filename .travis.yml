@@ -10,7 +10,7 @@ install:
   - sudo apt-get install -qq -y libglm-dev libglew-dev
   - git clone https://github.com/glfw/glfw.git
   - cd glfw
-  - cmake -G "Unix Makefiles"
+  - cmake .
   - make
   - sudo make install
 
