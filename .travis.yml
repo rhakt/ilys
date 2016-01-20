@@ -4,7 +4,7 @@ compiler: gcc-4.8
 
 install:
   - sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/test
-  - sudo add-apt-repository ppa:yjwong/cmake
+  - sudo add-apt-repository --yes ppa:yjwong/cmake
   - sudo apt-get -qq update
   - sudo apt-get -qq install cmake
   - sudo apt-get -qq install g++-4.8
