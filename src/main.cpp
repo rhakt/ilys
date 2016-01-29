@@ -10,6 +10,7 @@
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include <SOIL/SOIL.h>
+#include <lz4.h>
 
 #include <iostream>
 
