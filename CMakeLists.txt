@@ -75,7 +75,7 @@ include_directories(${GLEW_INCLUDE_DIRS} ${GLFW_INCLUDE_DIRS} ${GLM_INCLUDE_DIRS
 link_directories(${GLEW_LIBRARY_DIRS} ${GLFW_LIBRARY_DIRS})
 
 if (WIN32)
-   include_directories($ENV{SOIL_DIR}/src)
+   include_directories($ENV{SOIL_DIR}/include)
    link_directories($ENV{SOIL_DIR}/lib)
 endif ()
 

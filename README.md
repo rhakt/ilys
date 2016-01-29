@@ -38,7 +38,7 @@ lz4 (https://github.com/Cyan4973/lz4)
     # somehow install cmake, pkg-config, Visual Studio
     # somehow build and install glew, glfw, glm, lz4, SOIL
     # set dir of glew.pc, glfw3.pc to  %PKG_CONFIG_PATH%
-    # place SOIL.h in %SOIL_DIR%/src, SOIL.lib in %SOIL_DIR%/lib
+    # place SOIL.h in %SOIL_DIR%/include/SOIL, SOIL.lib in %SOIL_DIR%/lib
     
     $ git clone https://github.com/rhakt/ilys.git
     $ cd ilys
