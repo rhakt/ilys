@@ -66,13 +66,18 @@ elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
 endif()
 
 find_package(PkgConfig REQUIRED)
-find_package (OpenGL REQUIRED)
+find_package(OpenGL REQUIRED)
 pkg_search_module(GLEW REQUIRED glew)
 pkg_search_module(GLFW REQUIRED glfw3)
 find_package(glm REQUIRED glm)
 
 include_directories(${GLEW_INCLUDE_DIRS} ${GLFW_INCLUDE_DIRS} ${GLM_INCLUDE_DIRS})
 link_directories(${GLEW_LIBRARY_DIRS} ${GLFW_LIBRARY_DIRS})
+
+if (WIN32)
+   include_directories($ENV{SOIL_DIR}/src)
+   link_directories($ENV{SOIL_DIR}/lib)
+endif ()
 
 file(GLOB CXX_SOURCE_FILES ${CMAKE_SOURCE_DIR}/src/*.cpp)
 add_executable(${TARGET} ${CXX_SOURCE_FILES})
@@ -81,4 +86,4 @@ if (MSVC)
    set_target_properties(${TARGET} PROPERTIES LINK_FLAGS_RELEASE "/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup")
 endif ()
 
-target_link_libraries(${TARGET} ${GLEW_STATIC_LIBRARIES} ${GLFW_STATIC_LIBRARIES})
+target_link_libraries(${TARGET} ${GLEW_STATIC_LIBRARIES} ${GLFW_STATIC_LIBRARIES} SOIL)
