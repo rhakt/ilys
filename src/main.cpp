@@ -1,13 +1,25 @@
+#if _DEBUG && _MSC_VER
+#define _CRTDBG_MAP_ALLOC
+#include <crtdbg.h>
+#endif
+
 #define GLEW_NO_GLU
 #define GLEW_STATIC
 
-#include <iostream>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
+
+#include <iostream>
 
 auto main()-> int {
-    
-    GLFWwindow* window;
+
+#if _DEBUG && _MSC_VER
+	// check memory leak (only VS)
+	::_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+#endif
+
+	GLFWwindow* window;
 
     /* Initialize the library */
     if (!glfwInit()) {
