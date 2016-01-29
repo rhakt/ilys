@@ -69,7 +69,7 @@ find_package(PkgConfig REQUIRED)
 find_package(OpenGL REQUIRED)
 pkg_search_module(GLEW REQUIRED glew)
 pkg_search_module(GLFW REQUIRED glfw3)
-pkg_search_module(LZ4 REQUIRED lz4)
+pkg_search_module(LZ4 REQUIRED liblz4)
 find_package(glm REQUIRED glm)
 
 include_directories(${GLEW_INCLUDE_DIRS} ${GLFW_INCLUDE_DIRS} ${GLM_INCLUDE_DIRS} ${LZ4_INCLUDE_DIRS})
