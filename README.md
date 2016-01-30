@@ -8,25 +8,22 @@
 require:  
 gcc >= 4.9  
 cmake >= 2.8.12  
-pkg-config  
-boost 1.60.0
-glew (http://glew.sourceforge.net/)
-glfw3 (http://www.glfw.org/) 
-glm (http://glm.g-truc.net/0.9.7/index.html)
-SOIL (http://www.lonesock.net/soil.html)
-lz4 (https://github.com/Cyan4973/lz4)
-cpp-netlib (http://cpp-netlib.org/)
+pkg-config   
+glew 3.1.2 (http://glew.sourceforge.net/)  
+glfw 1.13.0 (http://www.glfw.org/)  
+glm 0.9.7.2 (http://glm.g-truc.net/0.9.7/index.html)  
+SOIL (http://www.lonesock.net/soil.html)  
+lz4 (https://github.com/Cyan4973/lz4)  
+cpp-netlib 0.11.2 (http://cpp-netlib.org/) (depends boost >= 1.57.0 and OpenSSL)  
+PortAudio v19 (http://www.portaudio.com/)
 
 ### ubuntu
 
     $ sudo apt-get install libxinerama-dev libxcursor-dev
-    $ sudo apt-get install libglew-dev libsoil-dev
+    $ sudo apt-get install libglew-dev libsoil-dev openssl
     
-    $ git clone https://github.com/glfw/glfw.git
-    $ cd glfw
-    $ cmake .
-    $ make
-    $ sudo make install
+    # get and build and install glfw3, glm, lz4, boost, PortAudio, cpp-netlib
+    # notice: apt-get libportaudio-dev libboost-all-dev is old.
     
     $ git clone https://github.com/rhakt/ilys.git
     $ cd ilys
@@ -38,20 +35,23 @@ cpp-netlib (http://cpp-netlib.org/)
 ### windows
     
     # somehow install cmake, pkg-config, Visual Studio
-    # somehow build and install glew, glfw, glm, lz4, SOIL
+    # somehow build and install glew, glfw, glm, lz4, SOIL, openssl, boost, cpp-netlib, PortAudio
     # set dir of glew.pc, glfw3.pc, lz4.pc to  %PKG_CONFIG_PATH%
+    # set dir of glmConfig.cmake, cppnetlibConfig.cmake in %CMAKE_PREFIX_PATH%
     # place SOIL.h in %SOIL_DIR%/include/SOIL, SOIL.lib in %SOIL_DIR%/lib
+    # place include folder in %PORTAUDIO_DIR%/include, static link lib in %PORTAUDIO_DIR%/lib
+    # notice: PortAudio build with deinfe PA_WDMKS_NO_KSGUID_LIB
+    # ! use static library all
     
     $ git clone https://github.com/rhakt/ilys.git
     $ cd ilys
     $ mkdir build
     $ cd build
     $ set SOIL_DIR=C:\SOIL
+    $ set PORTAUDIO_DIR=C:\portaudio
     $ cmake .. -G "Visual Studio 14"
     
     # open ilys.sln on Visual Studio and build
-    
-    ! glew, glfw : user static link library
     
 glew.pc
     

@@ -77,9 +77,11 @@ include_directories(${GLEW_INCLUDE_DIRS} ${GLFW_INCLUDE_DIRS} ${GLM_INCLUDE_DIRS
 link_directories(${GLEW_LIBRARY_DIRS} ${GLFW_LIBRARY_DIRS} ${LZ4_LIBRARY_DIRS} ${CPPNETLIB_LIBRARY_DIRS})
 
 if (WIN32)
-  include_directories($ENV{SOIL_DIR}/include)
-  link_directories($ENV{SOIL_DIR}/lib)
+  include_directories($ENV{SOIL_DIR}/include $ENV{PORTAUDIO_DIR}/include)
+  link_directories($ENV{SOIL_DIR}/lib $ENV{PORTAUDIO_DIR}/lib)
 endif ()
+
+# set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR})
 
 file(GLOB CXX_SOURCE_FILES ${CMAKE_SOURCE_DIR}/src/*.cpp)
 add_executable(${TARGET} ${CXX_SOURCE_FILES})
@@ -88,4 +90,4 @@ if (MSVC)
    set_target_properties(${TARGET} PROPERTIES LINK_FLAGS_RELEASE "/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup")
 endif ()
 
-target_link_libraries(${TARGET} ${GLEW_STATIC_LIBRARIES} ${GLFW_STATIC_LIBRARIES} ${LZ4_LIBRARIES} ${CPPNETLIB_LIBRARIES} SOIL)
+target_link_libraries(${TARGET} ${GLEW_STATIC_LIBRARIES} ${GLFW_STATIC_LIBRARIES} ${LZ4_LIBRARIES} ${CPPNETLIB_LIBRARIES} SOIL portaudio)
