@@ -9,11 +9,13 @@ require:
 gcc >= 4.9  
 cmake >= 2.8.12  
 pkg-config  
+boost 1.60.0
 glew (http://glew.sourceforge.net/)
 glfw3 (http://www.glfw.org/) 
 glm (http://glm.g-truc.net/0.9.7/index.html)
 SOIL (http://www.lonesock.net/soil.html)
 lz4 (https://github.com/Cyan4973/lz4)
+cpp-netlib (http://cpp-netlib.org/)
 
 ### ubuntu
 
