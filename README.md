@@ -1,8 +1,5 @@
 # ilys
 
-[![Build Status](https://drone.io/github.com/rhakt/ilys/status.png)](https://drone.io/github.com/rhakt/ilys/latest)
-
-
 ## Install
 
 require:  
@@ -12,18 +9,17 @@ pkg-config
 glew 3.1.2 (http://glew.sourceforge.net/)  
 glfw 1.13.0 (http://www.glfw.org/)  
 glm 0.9.7.2 (http://glm.g-truc.net/0.9.7/index.html)  
-SOIL (http://www.lonesock.net/soil.html)  
 lz4 (https://github.com/Cyan4973/lz4)  
-cpp-netlib 0.11.2 (http://cpp-netlib.org/) (depends boost >= 1.57.0 and OpenSSL)  
-PortAudio v19 (http://www.portaudio.com/)
+cpp-netlib 0.11.2 (http://cpp-netlib.org/) (depends boost >= 1.57.0 and OpenSSL) 
+ 
 
 ### ubuntu
 
     $ sudo apt-get install libxinerama-dev libxcursor-dev
-    $ sudo apt-get install libglew-dev libsoil-dev openssl
+    $ sudo apt-get install libglew-dev openssl
     
-    # get and build and install glfw3, glm, lz4, boost, PortAudio, cpp-netlib
-    # notice: apt-get libportaudio-dev libboost-all-dev is old.
+    # get and build and install glfw3, glm, lz4, boost, cpp-netlib
+    # notice: apt-get libboost-all-dev is old.
     
     $ git clone https://github.com/rhakt/ilys.git
     $ cd ilys
@@ -47,8 +43,6 @@ PortAudio v19 (http://www.portaudio.com/)
     $ cd ilys
     $ mkdir build
     $ cd build
-    $ set SOIL_DIR=C:\SOIL
-    $ set PORTAUDIO_DIR=C:\portaudio
     $ cmake .. -G "Visual Studio 14"
     
     # open ilys.sln on Visual Studio and build
