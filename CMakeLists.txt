@@ -73,20 +73,27 @@ pkg_search_module(GLFW REQUIRED glfw3)
 pkg_search_module(LZ4 REQUIRED liblz4)
 find_package(glm REQUIRED glm)
 
-include_directories(${GLEW_INCLUDE_DIRS} ${GLFW_INCLUDE_DIRS} ${GLM_INCLUDE_DIRS} ${LZ4_INCLUDE_DIRS} ${CPPNETLIB_INCLUDE_DIRS})
-link_directories(${GLEW_LIBRARY_DIRS} ${GLFW_LIBRARY_DIRS} ${LZ4_LIBRARY_DIRS} ${CPPNETLIB_LIBRARY_DIRS})
+include_directories(${GLEW_INCLUDE_DIRS} ${GLFW_INCLUDE_DIRS} ${GLM_INCLUDE_DIRS} ${LZ4_INCLUDE_DIRS})
+link_directories(${GLEW_LIBRARY_DIRS} ${GLFW_LIBRARY_DIRS} ${LZ4_LIBRARY_DIRS})
 
 if (WIN32)
-  include_directories($ENV{FLATBUFFERS_DIR}/include)
+  include_directories($ENV{FLATBUFFERS_DIR}/include $ENV{LIBWEBSOCKETS_DIR}/include)
+  link_directories($ENV{LIBWEBSOCKETS_DIR}/lib)
 endif ()
 
 # set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR})
 
-file(GLOB_RECURSE CXX_SOURCE_FILES ${CMAKE_SOURCE_DIR}/src/*.cpp)
+file(GLOB_RECURSE CXX_SOURCE_FILES
+  ${CMAKE_SOURCE_DIR}/src/*.cpp
+)
 add_executable(${TARGET} ${CXX_SOURCE_FILES})
 
 if (MSVC)
    set_target_properties(${TARGET} PROPERTIES LINK_FLAGS_RELEASE "/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup")
 endif ()
 
-target_link_libraries(${TARGET} ${GLEW_STATIC_LIBRARIES} ${GLFW_STATIC_LIBRARIES} ${LZ4_LIBRARIES} ${CPPNETLIB_LIBRARIES})
+target_link_libraries(${TARGET} ${GLEW_STATIC_LIBRARIES} ${GLFW_STATIC_LIBRARIES} ${LZ4_LIBRARIES} websockets_static.lib)
+
+if (WIN32)
+  # target_link_libraries(${TARGET} ws2_32.lib psapi.lib Userenv.lib Iphlpapi.lib)
+endif ()

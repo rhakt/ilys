@@ -16,20 +16,20 @@
 #include <glm/gtx/transform2.hpp>
 #include <lz4.h>
 
+#include "lib/spdlog/spdlog.h"
+
+#define STB_IMAGE_IMPLEMENTATION
+#include "lib/stb/stb_image.h"
+
+#define STB_TRUETYPE_IMPLEMENTATION
+#include "lib/stb/stb_truetype.h"
+
 #include <iostream>
 #include <vector>
 #include <string>
 
 #include "util.hpp"
-#include "logger.hpp"
 
-#define STB_IMAGE_IMPLEMENTATION
-#include "lib/stb_image.h"
-
-#define STB_TRUETYPE_IMPLEMENTATION
-#include "lib/stb_truetype.h"
-
-#include "rechor/rechor_importer.hpp"
 
 
 #if _MSC_VER

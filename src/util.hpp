@@ -1,6 +1,3 @@
-// rechor project
-// util.hpp
-
 #ifndef _RHACT_UTIL_HPP_
 #define _RHACT_UTIL_HPP_
 

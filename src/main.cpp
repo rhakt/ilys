@@ -1,5 +1,6 @@
 #include "main.hpp"
 
+
 auto main()-> int {
 
 #if _DEBUG && _MSC_VER
@@ -7,10 +8,10 @@ auto main()-> int {
     ::_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 #endif
 
-    using namespace rhakt;
+    using namespace rhakt; 
 
-    logger::setLevel(LOGLEVEL::DEBUG);
-
+    std::cout << fmt::format("Hello, {}!", "world") << std::endl;
+    
     // [stb_image.h] usage 
     // int x, y, comp;
     // auto buf = stbi_load("data/po.png", &x, &y, &comp, STBI_rgb_alpha);
@@ -34,17 +35,13 @@ auto main()-> int {
             glTexCoord2f(q.s0, q.t0); glVertex2f(q.x0, q.y1);
         }*/
 
-    //rechor::Importer importer;
-    //rechor::Scene scene;
-    //importer.load("data/model/unitychan.rkr", scene);
-
+    
     if(!glfwInit()) {
-        logger::error("[glfw] initialize");
         return -1;
     }
 
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     
@@ -54,7 +51,6 @@ auto main()-> int {
     auto window = glfwCreateWindow(800, 600, "ilys", pMonitor, NULL);
     if(!window) {
         glfwTerminate();
-        logger::error("[glfw] create window");
         return -1;
     }
 
@@ -63,10 +59,10 @@ auto main()-> int {
     
     glewExperimental = true;
     if(glewInit() != GLEW_OK) {
-        logger::error("[glew] initialize");
         return -1;
     }
 
+    
     glClearColor(0.8f, 0.8f, 0.8f, 1.f);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -86,5 +82,4 @@ auto main()-> int {
     }
 
     glfwTerminate();
-    
 }
