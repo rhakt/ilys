@@ -6,22 +6,7 @@
 #include <sstream>
 
 namespace rhakt {
-namespace util {
-    
-    // make array
-    template<typename T, typename ...Args>
-    constexpr std::array<T, sizeof...(Args)> make_array(Args&&... args) {
-        return std::array<T, sizeof...(Args)>{ static_cast<Args&&>(args)... };
-    }
-
-    // get size of std::array
-    template<typename T, std::size_t N>
-    constexpr std::size_t array_size(const std::array<T, N>&) { return N; }
-
-    // get size of array[N]
-    template<typename T, std::size_t N>
-    constexpr std::size_t array_size(T(&)[N]) { return N; }
-    
+namespace util { 
     
     /* noncopyable */
     class Noncopyable {
