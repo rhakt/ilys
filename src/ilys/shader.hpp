@@ -41,10 +41,10 @@ namespace shader {
 
 
         struct uniform_updater {
-            static void update(GLuint uni, const std::vector<float>& val) {
+            static void update(GLuint uni, const std::array<float, 2>& val) {
                 glUniform2fv(uni, 1, val.data());
             }
-            static void update(GLuint uni, const std::vector<int>& val) {
+            static void update(GLuint uni, const std::array<int, 2>& val) {
                 glUniform2iv(uni, 1, val.data());
             }
             static void update(GLuint uni, float val) {

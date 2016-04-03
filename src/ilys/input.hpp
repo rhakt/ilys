@@ -59,6 +59,10 @@ namespace ilys {
             que.clear();
             return std::move(str);
         }
+
+        static void refresh() {
+            for(auto&& p : pulsed) { p.second = false; }
+        }
     
     };
 

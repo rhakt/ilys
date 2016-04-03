@@ -2,6 +2,7 @@
 #define _RHAKT_ILYS_ILYS_COMMON_HPP_
 
 #include <vector>
+#include <array>
 #include <string>
 #include <memory>
 #include <tuple>
