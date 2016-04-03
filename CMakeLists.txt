@@ -16,24 +16,28 @@ set(CMAKE_DISABLE_SOURCE_CHANGES  ON)
 set(CMAKE_VERBOSE_MAKEFILE ON)
 set(CMAKE_COLOR_MAKEFILE ON)
 
+set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cotire/CMake)
+include(cotire)  
+
 if (WIN32)
   set(CMAKE_SHARED_LIBRARY_PREFIX "")
 endif()
 
 set(CMAKE_CXX_FLAGS "-Wall")
-set(CMAKE_CXX_FLAGS_DEBUG "-D_DEBUG")
 set(CMAKE_CXX_FLAGS_RELEASE "-DNDEBUG")
 
+include(CheckCXXCompilerFlag)
+CHECK_CXX_COMPILER_FLAG("-std=c++14" COMPILER_SUPPORTS_CXX14)
+CHECK_CXX_COMPILER_FLAG("-std=c++1y" COMPILER_SUPPORTS_CXX1Y)
+
 if (MSVC)
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W2 /EHsc")
+
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W2 /EHsc /MP")
   set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /Od /MTd /Zi")
   set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /O2 /MT")
   
 elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-  include(CheckCXXCompilerFlag)
-  CHECK_CXX_COMPILER_FLAG("-std=c++14" COMPILER_SUPPORTS_CXX14)
-  CHECK_CXX_COMPILER_FLAG("-std=c++1y" COMPILER_SUPPORTS_CXX1Y)
-  
+
   if(COMPILER_SUPPORTS_CXX14)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
   elseif(COMPILER_SUPPORTS_CXX1Y)
@@ -47,10 +51,7 @@ elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
   set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O2")
   
 elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-  include(CheckCXXCompilerFlag)
-  CHECK_CXX_COMPILER_FLAG("-std=c++14" COMPILER_SUPPORTS_CXX14)
-  CHECK_CXX_COMPILER_FLAG("-std=c++1y" COMPILER_SUPPORTS_CXX1Y)
-  
+
   if(COMPILER_SUPPORTS_CXX14)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -stdlib=libc++")
   elseif(COMPILER_SUPPORTS_CXX1Y)
@@ -65,25 +66,56 @@ elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
 
 endif()
 
+set(Boost_USE_STATIC_LIBS ON)
+
 find_package(PkgConfig REQUIRED)
 find_package(OpenGL REQUIRED)
+find_package(Boost REQUIRED filesystem python)
 pkg_search_module(GLEW REQUIRED glew)
 pkg_search_module(GLFW REQUIRED glfw3)
 pkg_search_module(LZ4 REQUIRED liblz4)
 find_package(glm REQUIRED glm)
 
-include_directories(${GLEW_INCLUDE_DIRS} ${GLFW_INCLUDE_DIRS} ${GLM_INCLUDE_DIRS} ${LZ4_INCLUDE_DIRS})
-link_directories(${GLEW_LIBRARY_DIRS} ${GLFW_LIBRARY_DIRS} ${LZ4_LIBRARY_DIRS})
+include_directories(
+  ${GLEW_INCLUDE_DIRS} 
+  ${GLFW_INCLUDE_DIRS} 
+  ${GLM_INCLUDE_DIRS} 
+  ${LZ4_INCLUDE_DIRS}
+  ${Boost_INCLUDE_DIR}
+)
 
-if (WIN32)
-  # include_directories($ENV{hoge}/include)
-  # link_directories($ENV{hoge}/lib)
-endif ()
+link_directories(
+  ${GLEW_LIBRARY_DIRS}
+  ${GLFW_LIBRARY_DIRS}
+  ${LZ4_LIBRARY_DIRS}
+  ${Boost_LIBRARY_DIRS}
+)
 
-# set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR})
+if(WIN32)
+  # TODO:
+  include_directories(
+    $ENV{ZEROMQ_DIR}/include
+    $ENV{PYTHON_DIR}/include
+  )
+  link_directories(
+    $ENV{ZEROMQ_DIR}/lib
+    $ENV{PYTHON_DIR}/libs
+  )
+endif()
 
-file(GLOB_RECURSE CXX_SOURCE_FILES
+set_directory_properties(PROPERTIES
+  COTIRE_PREFIX_HEADER_IGNORE_PATH
+    "${CMAKE_SOURCE_DIR}/src ${CMAKE_SOURCE_DIR}/src/ilys"
+  COTIRE_PREFIX_HEADER_INCLUDE_PATH
+    ${CMAKE_SOURCE_DIR}/src/lib
+)
+
+# GLOB_RECURSE
+file(GLOB CXX_SOURCE_FILES
   ${CMAKE_SOURCE_DIR}/src/*.cpp
+  ${CMAKE_SOURCE_DIR}/src/*.hpp
+  ${CMAKE_SOURCE_DIR}/src/ilys/*.cpp
+  ${CMAKE_SOURCE_DIR}/src/ilys/*.hpp
 )
 add_executable(${TARGET} ${CXX_SOURCE_FILES})
 
@@ -91,8 +123,14 @@ if (MSVC)
    set_target_properties(${TARGET} PROPERTIES LINK_FLAGS_RELEASE "/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup")
 endif ()
 
-target_link_libraries(${TARGET} ${GLEW_STATIC_LIBRARIES} ${GLFW_STATIC_LIBRARIES} ${LZ4_LIBRARIES})
+target_link_libraries(${TARGET} 
+  ${GLEW_STATIC_LIBRARIES}
+  ${GLFW_STATIC_LIBRARIES}
+  ${LZ4_LIBRARIES}
+  ${Boost_FILESYSTEM_LIBRARY}
+  ${Boost_PYTHON_LIBRARY}
+  libzmq
+  python34
+)
 
-if (WIN32)
-  # target_link_libraries(${TARGET} hoge.lib)
-endif ()
+cotire(${TARGET})

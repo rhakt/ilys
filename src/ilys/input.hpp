@@ -1,12 +1,7 @@
 #ifndef _RHAKT_ILYS_ILYS_INPUT_HPP_
 #define _RHAKT_ILYS_ILYS_INPUT_HPP_
 
-#include <vector>
-#include <string>
-#include <unordered_map>
-
-#include <GLFW/glfw3.h>
-
+#include "common.hpp"
 
 namespace rhakt {
 namespace ilys {

@@ -1,7 +1,6 @@
 #ifndef _RHACT_UTIL_HPP_
 #define _RHACT_UTIL_HPP_
 
-#include <array>
 #include <fstream>
 #include <sstream>
 
@@ -47,6 +46,9 @@ namespace util {
         return savefile(name, binary, buf.c_str(), buf.size());
     }
     
+    /* type traits*/
+    template <typename T>
+    using is_vector = std::is_same< T, std::vector<typename T::value_type, typename T::allocator_type>>;
 
 
 }} // namespace rhakt::util
