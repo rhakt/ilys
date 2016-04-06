@@ -5,6 +5,7 @@
 
 namespace rhakt {
 namespace ilys {
+namespace input {
     
     class Input {
     private:
@@ -66,6 +67,7 @@ namespace ilys {
     
     };
 
+} // end of namespace input
 } // end of namespace ilys
 } // end of namespace rhakt
 

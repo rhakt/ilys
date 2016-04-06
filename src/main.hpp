@@ -9,32 +9,18 @@
 #endif
 
 #include <iostream>
-#include <vector>
-#include <array>
-#include <string>
-#include <memory>
-#include <unordered_map>
 
-#define GLEW_NO_GLU
-#define GLEW_STATIC
-#define GLM_SWIZZLE
 
 #define ZMQ_CPP11
 #include "lib/zmq.hpp"
 
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtx/transform2.hpp>
 #include <lz4.h>
+
 
 #define BOOST_PYTHON_STATIC_LIB
 #include <boost/python.hpp>
 
 #include "lib/spdlog/spdlog.h"
-
-
 
 
 #if _MSC_VER

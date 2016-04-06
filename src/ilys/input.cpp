@@ -2,6 +2,7 @@
 
 namespace rhakt {
 namespace ilys {
+namespace input {
     
     /* Input */
     std::unordered_map<int, bool> Input::pressed;
@@ -9,6 +10,6 @@ namespace ilys {
     std::vector<char> Input::que;
     bool Input::inputStringFlag = false;
 
-
+} // end of namespace input
 } // end of namespace ilys
 } // end of namespace rhakt

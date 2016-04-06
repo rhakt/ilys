@@ -17,7 +17,8 @@ set(CMAKE_VERBOSE_MAKEFILE ON)
 set(CMAKE_COLOR_MAKEFILE ON)
 
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cotire/CMake)
-include(cotire)  
+include(cotire)
+include(CMakePrintHelpers)  
 
 if (WIN32)
   set(CMAKE_SHARED_LIBRARY_PREFIX "")
@@ -67,10 +68,12 @@ elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
 endif()
 
 set(Boost_USE_STATIC_LIBS ON)
+set(Boost_USE_STATIC_RUNTIME ON)
+set(Boost_USE_MULTITHREADED ON)
 
 find_package(PkgConfig REQUIRED)
 find_package(OpenGL REQUIRED)
-find_package(Boost REQUIRED filesystem python)
+find_package(Boost REQUIRED COMPONENTS filesystem python)
 pkg_search_module(GLEW REQUIRED glew)
 pkg_search_module(GLFW REQUIRED glfw3)
 pkg_search_module(LZ4 REQUIRED liblz4)
@@ -96,19 +99,23 @@ if(WIN32)
   include_directories(
     $ENV{ZEROMQ_DIR}/include
     $ENV{PYTHON_DIR}/include
+    $ENV{SDL_DIR}/include
   )
   link_directories(
     $ENV{ZEROMQ_DIR}/lib
     $ENV{PYTHON_DIR}/libs
+    $ENV{SDL_DIR}/lib
   )
 endif()
 
+
 set_directory_properties(PROPERTIES
   COTIRE_PREFIX_HEADER_IGNORE_PATH
-    "${CMAKE_SOURCE_DIR}/src ${CMAKE_SOURCE_DIR}/src/ilys"
+    "${CMAKE_SOURCE_DIR}/src;${CMAKE_SOURCE_DIR}/src/ilys"
   COTIRE_PREFIX_HEADER_INCLUDE_PATH
-    ${CMAKE_SOURCE_DIR}/src/lib
+    "${CMAKE_SOURCE_DIR}/src/lib"
 )
+
 
 # GLOB_RECURSE
 file(GLOB CXX_SOURCE_FILES
@@ -131,6 +138,10 @@ target_link_libraries(${TARGET}
   ${Boost_PYTHON_LIBRARY}
   libzmq
   python34
+  SDL2
+  SDL2main
+  SDL2_ttf
+  SDL2_mixer
 )
 
 cotire(${TARGET})

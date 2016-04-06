@@ -41,6 +41,18 @@ namespace shader {
 
 
         struct uniform_updater {
+            static void update(GLuint uni, const std::array<float, 4>& val) {
+                glUniform4fv(uni, 1, val.data());
+            }
+            static void update(GLuint uni, const std::array<int, 4>& val) {
+                glUniform4iv(uni, 1, val.data());
+            }
+            static void update(GLuint uni, const std::array<float, 3>& val) {
+                glUniform3fv(uni, 1, val.data());
+            }
+            static void update(GLuint uni, const std::array<int, 3>& val) {
+                glUniform3iv(uni, 1, val.data());
+            }
             static void update(GLuint uni, const std::array<float, 2>& val) {
                 glUniform2fv(uni, 1, val.data());
             }
@@ -80,22 +92,20 @@ namespace shader {
                 val = val_;
                 uniform_updater::update(uni, val);
             }
-            template <class F>
-            void updater(const F&& f) {
-                f(val);
-                uniform_updater::update(uni, val);
-            }
             virtual void bind(GLuint program) {
                 uni = glGetUniformLocation(program, name.c_str());
             };
         private:
-            GLuint uni;
+            GLuint uni = NULL;
             std::string name;
             T val;
         };
+        
         template <class T>
         using sherd_uniform_type = std::shared_ptr<ilys::shader::sherd_uniform<T>>;
         
+        template <class T, class... Args>
+        inline auto make_uniform(Args... args) { return std::make_shared<shader::sherd_uniform<T>>(args...); };
 
         class Shader {
         public:

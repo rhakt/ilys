@@ -9,48 +9,31 @@ namespace rhakt {
 namespace ilys {
 namespace polygon {
 
-    GLuint generate(GLuint program) {
+    GLuint generate2DSquare() {
         GLuint vao;
 
-        std::vector<float> vertices = {
-            -0.5,  0.5,
-            -0.5, -0.5,
-            0.5, -0.5,
-            -0.5,  0.5,
-            0.5, -0.5,
-            0.5,  0.5
+        std::vector<float> buf = {
+            -0.5,  0.5, 0.0, 0.0,
+            -0.5, -0.5, 0.0, 1.0,
+             0.5, -0.5, 1.0, 1.0,
+            -0.5,  0.5, 0.0, 0.0,
+             0.5, -0.5, 1.0, 1.0,
+             0.5,  0.5, 1.0, 0.0
         };
-        std::vector<float> uvs = {
-            0.0, 0.0,
-            0.0, 1.0,
-            1.0, 1.0,
-            0.0, 0.0,
-            1.0, 1.0,
-            1.0, 0.0
-        };
-
+        
         glGenVertexArrays(1, &vao);
         glBindVertexArray(vao);
 
-        GLuint vbo[2];
-        glGenBuffers(2, &vbo[0]);
+        GLuint vbo[1];
+        glGenBuffers(sizeof(vbo)/sizeof(vbo[0]), &vbo[0]);
 
-        auto vbo_gen = [&program](const std::string& name, GLuint vbo_, const std::vector<float>& buf){
-            glBindBuffer(GL_ARRAY_BUFFER, vbo_);
-            glBufferData(
-                GL_ARRAY_BUFFER,
-                buf.size() * sizeof(float),
-                buf.data(),
-                GL_STATIC_DRAW
-                );
-            auto attr = glGetAttribLocation(program, name.c_str());
-            glEnableVertexAttribArray(attr);
-            glVertexAttribPointer(attr, 2, GL_FLOAT, false, 2 * sizeof(float), 0);
-            return attr;
-        };
-
-        vbo_gen("vPos", vbo[0], vertices);
-        vbo_gen("vUv", vbo[1], uvs);
+        glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
+        glBufferData(GL_ARRAY_BUFFER, buf.size() * sizeof(float), buf.data(), GL_STATIC_DRAW);
+        glEnableVertexAttribArray(0);
+        glVertexAttribPointer(0, 2, GL_FLOAT, false, sizeof(float) * 4, 0);
+        glEnableVertexAttribArray(1);
+        int offset = sizeof(float) * 2;
+        glVertexAttribPointer(1, 2, GL_FLOAT, false, sizeof(float) * 4, (const void*)offset);
 
         return vao;
     }
